@@ -1,0 +1,114 @@
+import React from 'react';
+import { View, Text, Image, Dimensions, Platform, TouchableOpacity } from 'react-native';
+import commonStyles from '../../components/common/styles/commonStyles';
+import * as Animatable from 'react-native-animatable';
+import TextField from 'react-native-md-textinput';
+var device = Dimensions.get('window');
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
+function wp(percentage) {
+    const value = (percentage * viewportWidth) / 100;
+    return Math.round(value);
+}
+function hp(percentage) {
+    const value = (percentage * viewportHeight) / 100;
+    return Math.round(value);
+}
+
+const SignInForm = ({ clickForgotPassword, signInValidation, inputValue,showhidePassword,showPasswordValue }) => {
+
+    return (
+        <Animatable.View animation="bounceIn" style={[commonStyles.alignCenter]}>
+
+            <Image source={require('../../../../images/box_bg.png')} style={{marginTop:hp(3),width:wp(84), height:hp(50),justifyContent:'center'}}>
+
+                <View style={{width:wp(84)}}>
+                    <View style={{paddingHorizontal:wp(15)}}>
+                        <TextField
+                            label={'E-Mail'}
+                            highlightColor={'rgb(255,255,255)'}
+                            textColor={'rgb(255,255,255)'}
+                            labelColor={'rgb(255,255,255)'}
+                            textFocusColor={'rgb(255,255,255)'}
+                            borderFocusColor={'rgb(77,142,224)'}
+                            borderColor={'rgb(77,142,224)'}
+                            lineHeight={wp(4.3)}
+                            padding={0}
+                            margin={0}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text) => signInValidation(text, 2)}
+                            keyboardType={'email-address'}
+                            value={inputValue.email}
+                        />
+                    </View>
+                    <View style={{paddingTop:hp(0),paddingHorizontal:wp(15)}}>
+                        <TextField
+                            secureTextEntry={showPasswordValue}
+                            label={'Password'}
+                            highlightColor={'rgb(255,255,255)'}
+                            textColor={'rgb(255,255,255)'}
+                            labelColor={'rgb(255,255,255)'}
+                            textFocusColor={'rgb(255,255,255)'}
+                            borderColor={'rgb(77,142,224)'}
+                            padding={0}
+                            margin={0}
+                            underlineColorAndroid={'transparent'}
+                            onChangeText={(text) => signInValidation(text, 3)}
+                            keyboardType={'ascii-capable'}
+                            value={inputValue.password}
+                        />
+                        <TouchableOpacity style={[styles.showPswd]} onPress={showhidePassword}>
+                            <Image source={require('../../../../images/showPassword.png')} style={{width:wp(4.5),height:wp(4.5),resizeMode:'contain'}}/>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[ styles.chatBoxForgotPasswordView,commonStyles.alignEnd,{paddingTop:wp(2)}]}>
+
+                        <Text onPress={clickForgotPassword} style={[styles.chatBoxForgotPassword,commonStyles.opensansRegular,commonStyles.fontSize12]}>Forgot Password ?</Text>
+
+                    </View>
+                </View>
+
+            </Image>
+
+        </Animatable.View>
+
+
+    )
+}
+const styles = {
+    chatBoxInpView: {
+        paddingLeft: 50,
+        paddingRight: 50,
+    },
+    chatBoxInpSubView: {
+
+    },
+    chatBoxInpText: {
+        backgroundColor: 'transparent',
+        color: "#FFF",
+        paddingTop: 15
+    },
+    chatBoxForgotPasswordView: {
+        paddingTop: hp(2),
+        paddingRight: wp(15)
+    },
+    chatBoxForgotPassword: {
+        color: '#FFF',
+        backgroundColor: "transparent",
+        fontFamily :( Platform.OS==='ios')? 'OpenSans' : 'opensans',
+    },
+    paddingTop50:{
+        paddingTop:50
+    },
+    showPswd:{
+        position:'absolute',
+        right:wp(9.5),
+        bottom:wp(2.5),
+        padding:wp(2.5)
+    },
+    marginTopM20:{
+        marginTop:-20.
+    }
+}
+
+export { SignInForm }
